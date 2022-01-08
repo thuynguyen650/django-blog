@@ -133,3 +133,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'blog-home' #the url after user log in
 
 LOGIN_URL = 'login' #here is the redirect url when user haven't logged in yet
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'thuy65.uit@gmail.com'
+EMAIL_HOST_PASSWORD = 'hndnfhqwisxsmwpa'
