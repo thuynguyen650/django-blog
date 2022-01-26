@@ -1,7 +1,8 @@
+from re import template
 from django.db.models import fields
 from django.shortcuts import get_object_or_404, render
 from django.views.generic.edit import UpdateView
-from .models import Post
+from .models import Post, Category
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
@@ -13,6 +14,20 @@ class HomeListView(ListView):
     context_object_name = 'posts'
     ordering = ['-created_at']
     paginate_by = 5
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all()
+        return context
+
+class CategoryListView(ListView):
+    model = Post
+    template_name = 'blog/home.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        category = get_object_or_404(Category, title=self.kwargs.get('category'))
+        return Post.objects.filter(category=category)
 
 class UserHomeListView(ListView):
     model = Post
@@ -20,7 +35,7 @@ class UserHomeListView(ListView):
     context_object_name = 'posts'
     paginate_by = 5
 
-    #override the get_query_set method
+    #override the get_queryset method
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Post.objects.filter(author=user).order_by('-created_at')

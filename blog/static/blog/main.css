@@ -59,6 +59,7 @@ body {
 
   .article-metadata a {
     color: #FCBD88;
+    font-weight: 700;
   }
   
   .article-metadata a:hover {
@@ -108,3 +109,8 @@ body {
   .btn-info:active {
     box-shadow: none!important;
   }
+
+.list-group-item a {
+  color: #FCBD88;
+  font-weight: 500;
+}
